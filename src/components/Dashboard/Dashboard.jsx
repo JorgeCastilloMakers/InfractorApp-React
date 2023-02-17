@@ -59,7 +59,6 @@ export const Dashboard = () => {
   ], [])
 
   const columnsInfractor = useMemo(() => [
-    {field: 'aprove', headerName: 'Estado', width: 100},
     {field: 'uf', headerName:'UF', width: 100},
     {field: 'date', headerName:'Fecha', width: 100},
     {field: 'time', headerName:'Hora', width: 60},

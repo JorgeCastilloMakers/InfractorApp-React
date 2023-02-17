@@ -24,7 +24,7 @@
     "react-storage-complete": "^1.0.6",
     "sass": "^1.57.1",
     "uuidv4": "^6.2.13",
-    "yup": "^1.0.0"
+    "yup": "^1.0.0-beta.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

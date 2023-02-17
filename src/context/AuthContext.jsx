@@ -3,8 +3,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import {auth, db} from '../../firebase'
 import { collection, doc, getDocs, getDoc, setDoc} from 'firebase/firestore'
 import {useNavigate} from 'react-router-dom'
-import avatarAdmin from '../assets/avatar-admin.jpg'
-import avatarUser from '../assets/avatar-user.jpg'
+import avatarAdmin from '../../public/avatar-admin.jpg'
+import avatarUser from '../../public/avatar-user.jpg'
 
 
 export const authContext = createContext()

@@ -9,24 +9,10 @@ import { useState,useEffect} from 'react'
 
 export const Home = () => {
 
-  const { loading} = useAuth()
+  const { loading, userInfo} = useAuth()
   const navigate = useNavigate()
-  const [user, setUser] = useState({})
+
   if (loading) return <h1>Loading...</h1>
-
-const { userSession } = useAuth();
-
-  const handleUser = () => {
-    let userStorage = sessionStorage.getItem('userLog')
-    let user = JSON.parse(userStorage);
-    return user;
-    };
-
-useEffect(() => {
-  console.log('handleUser: ', handleUser());
-  setUser(handleUser());
-}, [userSession])
-
 
   const handlePlus = () => navigate('/add');
 
@@ -38,7 +24,7 @@ useEffect(() => {
         animate={{opacity: 1}} 
         exit={{opacity: 0}} className="home">
         <div className="home_title">
-          <h2>Hola, {user.name}</h2>
+          <h2>Hola, {userInfo.name}</h2>
         </div>
         <Clock className='home_clock'/>
         <h3 className="home_help">Toca el signo + para agregar una infracción</h3>

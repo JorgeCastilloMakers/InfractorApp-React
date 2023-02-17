@@ -1,5 +1,5 @@
-import heroImage from '../../../public/cwok_casual_3.png' 
-import pulse from '../../../public/pulse-grey.gif' 
+import heroImage from '../../assets/cwok_casual_3.png' 
+import pulse from '../../assets/pulse-grey.gif' 
 import './hero.scss'
 
 export const Hero = ({children}) => {

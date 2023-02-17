@@ -5,7 +5,7 @@
     right: 2%;
     font-size: 70px;
     &_icon{
-        color: #00000b;
+        color: var(--black-color);
         background-color: aliceblue;
         border-radius: 50%;
         filter: drop-shadow(5px 5px 10px #000);
@@ -24,12 +24,14 @@
     width: 100%;
     height: 100vh;
     &_title{
+        color: var(--black-color);
         font-size: 30px;
         display: flex;
         gap: 20px;
         margin-bottom: 1%;
     }
     &_help{
+        color: var(--blue-color);
         font-size: 12px;
     }
 

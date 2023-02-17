@@ -3,9 +3,6 @@ import {useAuth} from '../../context/AuthContext'
 import {useNavigate} from 'react-router-dom'
 import './login.scss'
 import {motion} from 'framer-motion'
-import poliAvatar from '../../../public/policia-avatar.png'
-
-
 
 
 export const Login = () => {

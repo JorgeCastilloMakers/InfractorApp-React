@@ -4,11 +4,9 @@ import {DataGrid} from '@mui/x-data-grid'
 import {useAuth} from '../../context/AuthContext'
 import {useEffect, useMemo} from 'react'
 import { BsCardImage, BsCheckCircleFill } from "react-icons/bs";
-import accept from '../../../public/accept.png';
-import rejected from '../../../public/rejected.png';
 import {useState} from 'react'
 import { AiOutlineCloseCircle, AiFillCloseCircle, AiFillFileExcel } from "react-icons/ai";
-import { FcOk, FcCancel } from "react-icons/fc";
+
 
 
 export const Dashboard = () => {

@@ -6,83 +6,73 @@ import './sidebar.scss'
 import { useState, useCallback, useEffect} from 'react'
 import { FiLayers } from 'react-icons/fi';
 
+const itemsAdmin = [
+  {
+    name: 'Home',
+    icon: <AiOutlineHome className="sidebar_icon" />,
+    path: '/home',
+  },
+  {
+    name: 'Dashboard',
+    icon: <AiOutlineDashboard className="sidebar_icon" />,
+    path: '/dashboard',
+  },
+  {
+    name: 'Crear infracción',
+    icon: <FiPlusCircle className="sidebar_icon" />,
+    path: '/add',
+  },
+  {
+    name: 'Crear usuario',
+    icon: <AiOutlineUserAdd className="sidebar_icon" />,
+    path: '/register',
+  },
+];
+
+const itemsUser = [
+  {
+    name: 'Home',
+    icon: <AiOutlineHome className="sidebar_icon" />,
+    path: '/home',
+  },
+  {
+    name: 'Crear infracción',
+    icon: <FiPlusCircle className="sidebar_icon" />,
+    path: '/add',
+  },
+];
+
+
+
 export const Sidebar = () => {
-    const location = useLocation();
+  const { logOut, userInfo } = useAuth();
+  const location = useLocation();
 
-    if (location.pathname == '/') {
-      return null;
-    }
+  const [isOpen, setIsOpen] = useState(false);
 
-    const itemsAdmin = [
-            {name: "Home",
-            icon: <AiOutlineHome className='sidebar_icon' />,
-            path: "/"     
-            },
-            {name: "Dashboard",
-            icon: <AiOutlineDashboard className='sidebar_icon'/>,
-            path: "/dashboard"     
-            },
-            {name: "Crear infracción",
-            icon: <FiPlusCircle className='sidebar_icon'/>,
-            path: "/add"     
-            },
-            {name: "Crear usuario",
-            icon: <AiOutlineUserAdd className='sidebar_icon'/>,
-            path: "/register"     
-            }
-        ]
-    const itemsUser = [
-            {name: "Home",
-            icon: <AiOutlineHome className='sidebar_icon'/>,
-            path: "/"     
-            },
-            {name: "Crear infracción",
-            icon: <FiPlusCircle className='sidebar_icon'/>,
-            path: "/add"     
-            }
-        ]
-    const {logOut, userSession} = useAuth()
-    
-    const [isOpen, setIsOpen] = useState(false)
-    const [user, setUser] = useState({})
-    // const toggle = () => setIsOpen(!isOpen)
-    const toggle = useCallback(() => setIsOpen(prevState => !prevState), []);
+  const toggle = useCallback(() => setIsOpen(prevState => !prevState), []);
 
+  const handleLogOut = async () => {
+    await logOut();
+  };
 
-
-  const handleUser = () => {
-    let userStorage = sessionStorage.getItem('userLog')
-    let user = JSON.parse(userStorage);
-    return user;
-    };
-  
-    useEffect(() => {
-      setUser(handleUser());
-    }, [userSession])
-
-
-
-
-
-
-    const handleLogOut = async () =>{
-            await logOut();
-        }
-
+  if (location.pathname === '/') {
+    return null;
+  }
         return (
             <>
                 <nav className='sidebar' style={{width: isOpen ? "20%" : "40px"}}>
                 <div className='li_bars' >
                       <li className='sidebar_li' style={{paddingLeft: !isOpen ? "10%" : "5%"}} onClick={toggle}><FiLayers className='sidebar_icon'/> <p className='sidebar_li_p' style={{display: isOpen ? "block" : "none"}}>Menú</p></li>
                 </div>    
-                    { (user.rol === "admin") && itemsAdmin.map((item, index) => (
+                    { (userInfo.rol === "admin") && itemsAdmin.map((item, index) => (
                         <NavLink to={item.path} key={index} >
                             <li className='sidebar_li' style={{paddingLeft: !isOpen ? "10%" : "5%"}}>{item.icon } <p className='sidebar_li_p' style={{display: isOpen ? "flex" : "none"}}>{item.name}</p></li>
                         </NavLink>
                     
                     ))}
                     
-                    {(user.rol === "user") && itemsUser.map((item, index) => (
+                    {(userInfo.rol === "user") && itemsUser.map((item, index) => (
                         <NavLink to={item.path} key={index} >
                             <li className='sidebar_li' style={{paddingLeft: !isOpen ? "10%" : "5%"}}>{item.icon } <p className='sidebar_li_p' style={{display: isOpen ? "flex" : "none"}}>{item.name}</p></li>
 

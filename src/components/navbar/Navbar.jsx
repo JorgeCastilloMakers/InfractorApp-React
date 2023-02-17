@@ -1,5 +1,5 @@
 import './navbar.scss'
-import poliAvatar from '../../../public/policia-avatar.png'
+import poliAvatar from '../../assets/policia-avatar.png'
 
 
 export const Navbar = () => {

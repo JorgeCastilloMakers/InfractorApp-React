@@ -1,0 +1,125 @@
+.infringement{
+    width: 100%;
+    display: flex;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 5%;
+    justify-content: center;
+    align-items: center;
+    &_box{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 445px;
+
+    }
+    &_box_2nd{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 445px;
+        justify-content: flex-end;
+    }
+    &_server_error{
+        background-color: #a86767;
+        padding-left: 6px;
+        padding-right: 6px;
+        border-radius: 5px;
+    }
+    &_error{
+        color: #2efde2;
+    }
+    &_title{
+        padding-bottom: 2%;
+        font-size: 40px;
+        font-weight: 600;
+    }
+    &_label{
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+        font-size: 18px;
+        font-weight: 200;
+        color: #ffff;
+        width: 100%;
+        padding-right: 5%;
+        padding-left: 5%;
+    }
+    &_input{
+        width: 100%;
+        height: 25px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        padding-left: 6px;
+        color: #ffff;
+        background-color: #00000b;
+        text-transform: uppercase;
+        &:focus{
+            outline: none;
+        }
+        &::placeholder{
+            color: #00000b;
+        }
+    }
+    &_select{
+        width: 100%;
+        height: 25px;
+        border-radius: 5px;
+        color: #ffff;
+        &:optional{
+            background-color: #00000b;
+            font-size: 16px;
+
+        }
+    }
+    &_btn_add{
+        border: none;
+        background-color: #05ad13;
+        padding: 1% 15%;
+        border-radius: 10px;
+        color: #fafafa;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 18px;
+    }
+    &_btn_close{
+        border: none;
+        background-color: #8a1717;
+        padding: 1% 10%;
+        border-radius: 10px;
+        color: #fafafa;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 18px;
+    }
+    &_textarea{
+        width: 100%;
+        height: 25px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        padding-left: 6px;
+        color: #ffff;
+        background-color: #00000b;
+        max-width: 583px;
+        max-height: 200px;
+        &:focus{
+            outline: none;
+        }
+        &::placeholder{
+            color: #00000b;
+        }
+    }
+}
+
+.infringement_btn_container{
+    width: 100%;
+    display: flex;
+    gap: 5%;
+    justify-content: space-between;
+    justify-content: center;
+    padding-top: 10px;
+}

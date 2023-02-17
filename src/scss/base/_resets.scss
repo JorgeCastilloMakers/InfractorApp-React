@@ -1,0 +1,34 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button{
+    border: none;
+    background: none;
+    font-family: var(--font-poppins);
+    cursor: pointer;
+}
+
+textarea{
+    max-height: 180px;
+    min-height: 130px;
+
+    &::-webkit-scrollbar{
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: rgb(233, 67, 2); 
+        border-radius: 4px;
+    }
+}
+

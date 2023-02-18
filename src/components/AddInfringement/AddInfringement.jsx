@@ -60,6 +60,8 @@ const handleReset = () => {
      
   }
 
+  const regexDNI = /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/
+
   const { handleSubmit, errors, touched, handleChange, validateOnBlur, handleBlur, validate, values } = useFormik({
     initialValues: {
       uf: '',
@@ -82,9 +84,27 @@ const handleReset = () => {
         errors.uf = 'La uf debe estar compuesta por 8 caracteres'
       }
       if (!values.type) {
-        errors.type = 'Es un campo requerido'
-      } else if(values.type === ""){
         errors.type = 'Debe elegir uno de los items'
+      }
+      if (values.date > fecha) {
+        errors.date = 'La fecha seleccionada no puede ser superior a la actual'        
+      }
+      if (!values.time) {
+        errors.time = 'Debe indicar la hora, no puede quedar vacío'
+      }
+      if (!values.name) {
+        errors.name = 'Es un campo requerido'        
+      }
+      if (!values.lastname) {
+        errors.lastname = 'Es un campo requerido'        
+      }
+      if (!values.dni) {
+        errors.dni = 'Es campo es requerido'
+      } else if (!regexDNI.test(values.dni)) {
+        errors.dni = 'No es un dni valido'
+      }
+      if (!values.observations) {
+        errors.observations = 'Por favor describa el motivo de la infracción'
       }
 
       return errors
@@ -149,11 +169,11 @@ const handleReset = () => {
           <label className='infringement_label' htmlFor="date">
             Fecha
             {touched.date && <small className='infringement_error'>{errors.date}</small>}
-            <input className='infringement_input' type="date" name="date" defaultValue={fecha} onChange={handleChange} onBlur={ handleBlur } value={values.date}/>              
+            <input className='infringement_input' type="date" name="date" defaultValue={fecha} onChange={handleChange} onBlur={ handleBlur }/>              
           </label>
           <label className='infringement_label' htmlFor="time">
             Hora
-            <input className='infringement_input' type="time" name="time" defaultValue={timeNow} onChange={handleChange} onBlur={ handleBlur } value={values.time}/>  
+            <input className='infringement_input' type="time" name="time" defaultValue={timeNow} onChange={handleChange} onBlur={ handleBlur }/>  
           </label>
           <label className='infringement_label' htmlFor="name">
             Nombre

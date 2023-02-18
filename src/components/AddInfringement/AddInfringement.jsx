@@ -44,10 +44,7 @@ export const AddInfringement = () => {
   let minutes = today.getMinutes();
   let timeNow = `${hour}:${minutes}`
 
-  // const handleChange = async (e) => {
-  //   const {name, value} = e.target;    
-  //   setData({...data, [name]: value})
-  // }
+
 const handleReset = () => {
   setData({
     uf: '',
@@ -73,25 +70,10 @@ const handleReset = () => {
     } catch (error) {
       console.log(error)
     }
-    
-  
-  
+     
   }
 
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let imageUpload = await uploadFile(file).then()
-  //   if(imageUpload === ""){
-  //     imageUpload = "Sin imagen"
-  //   }
-  //   setData({...data, imageURL: `${imageUpload}`})
-
-  //   upToDatabase(data)
-  //   e.target.reset()
-
-  // }
-  const { handleSubmit, errors, touched, handleChange, validateOnBlur, handleBlur } = useFormik({
+  const { handleSubmit, errors, touched, handleChange, validateOnBlur, handleBlur, validate, values } = useFormik({
     initialValues: {
       uf: '',
       type: '',
@@ -140,12 +122,12 @@ const handleReset = () => {
           <label className='infringement_label' htmlFor="uf">
             Unidad
             {touched.uf && <small className='infringement_error'>{errors.uf}</small>}
-            <input className='infringement_input' type="text" name="uf" onChange={handleChange} onBlur={ handleBlur } />              
+            <input className='infringement_input' type="text" name="uf" onChange={handleChange} onBlur={handleBlur} value={values.uf} />              
           </label>
           <label className='infringement_label' htmlFor="type">
             Tipo
             {touched.type && <small className='infringement_error'>{errors.type}</small>}            
-            <select  className='infringement_select' name="type" onChange={handleChange} onBlur={ handleBlur }>
+            <select  className='infringement_select' name="type" onChange={handleChange} onBlur={ handleBlur } value={values.type}>
               <option value="Control de transito interno">Control de transito interno</option>
               <option value="Ruidos Molestos">Ruidos Molestos</option>
               <option value="Estacionamiento prohibo">Estacionamiento prohibo</option>
@@ -163,21 +145,21 @@ const handleReset = () => {
           <label className='infringement_label' htmlFor="date">
             Fecha
             {touched.date && <small className='infringement_error'>{errors.date}</small>}
-            <input className='infringement_input' type="date" name="date" defaultValue={fecha} onChange={handleChange} onBlur={ handleBlur }/>              
+            <input className='infringement_input' type="date" name="date" defaultValue={fecha} onChange={handleChange} onBlur={ handleBlur } value={values.date}/>              
           </label>
           <label className='infringement_label' htmlFor="time">
             Hora
-            <input className='infringement_input' type="time" name="time" defaultValue={timeNow} onChange={handleChange} onBlur={ handleBlur }/>  
+            <input className='infringement_input' type="time" name="time" defaultValue={timeNow} onChange={handleChange} onBlur={ handleBlur } value={values.time}/>  
           </label>
           <label className='infringement_label' htmlFor="name">
             Nombre
             {touched.name && <small className='infringement_error'>{errors.name}</small>}
-            <input className='infringement_input' type="text" name="name" onChange={handleChange} onBlur={ handleBlur }/> 
+            <input className='infringement_input' type="text" name="name" onChange={handleChange} onBlur={ handleBlur } value={values.name}/> 
           </label>
           <label className='infringement_label' htmlFor="lastname">
             Apellido
             {touched.lastname && <small className='infringement_error'>{errors.lastname}</small>}
-            <input className='infringement_input' type="text" name="lastname" onChange={handleChange} onBlur={ handleBlur }/> 
+            <input className='infringement_input' type="text" name="lastname" onChange={handleChange} onBlur={ handleBlur } value={values.lastname}/> 
           </label>
 
         </div>
@@ -185,17 +167,17 @@ const handleReset = () => {
           <label className='infringement_label' htmlFor="dni">
             DNI
             {touched.dni && <small className='infringement_error'>{errors.dni}</small>}
-            <input className='infringement_input' type="number" name="dni" onChange={handleChange} onBlur={ handleBlur }/> 
+            <input className='infringement_input' type="number" name="dni" onChange={handleChange} onBlur={ handleBlur } value={values.dni}/> 
           </label>
           <label className='infringement_label' htmlFor="observations">
             Observaciones
             {touched.observations && <small className='infringement_error'>{errors.observations}</small>}
-          <textarea className='infringement_textarea' name="observations"  cols="30" rows="10" onChange={handleChange} onBlur={ handleBlur }></textarea> 
+          <textarea className='infringement_textarea' name="observations"  cols="30" rows="10" onChange={handleChange} onBlur={ handleBlur } value={values.observations}></textarea> 
           </label>
           <label className='infringement_label' htmlFor="carID">
             Dominio
             {touched.carID && <small className='infringement_error'>{errors.carID}</small>}
-            <input className='infringement_input' type="text" name="carID" onChange={handleChange} onBlur={ handleBlur }/>
+            <input className='infringement_input' type="text" name="carID" onChange={handleChange} onBlur={ handleBlur } value={values.carID}/>
           </label>
           <label className='infringement_label' htmlFor="imageURL">
             Imagen

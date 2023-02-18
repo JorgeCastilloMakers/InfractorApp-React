@@ -61,28 +61,28 @@ export const Sidebar = () => {
   }
         return (
             <>
-                <nav className='sidebar' style={{width: isOpen ? "20%" : "40px"}}>
+                <nav className={isOpen ? "sidebar" : "sidebar open"}>
                 <div className='li_bars' >
-                      <li className='sidebar_li' style={{paddingLeft: !isOpen ? "10%" : "5%"}} onClick={toggle}><FiLayers className='sidebar_icon'/> <p className='sidebar_li_p' style={{display: isOpen ? "block" : "none"}}>Menú</p></li>
+                      <li className={isOpen ? "sidebar_li" : "sidebar_li sidebar_li_open"} onClick={toggle}><FiLayers className='sidebar_icon'/> <p className={isOpen ? "sidebar_li_p" : "sidebar_li_p sidebar_li_p_open"}>Menú</p></li>
                 </div>    
                     { (userInfo.rol === "admin") && itemsAdmin.map((item, index) => (
                         <NavLink to={item.path} key={index} >
-                            <li className='sidebar_li' style={{paddingLeft: !isOpen ? "10%" : "5%"}}>{item.icon } <p className='sidebar_li_p' style={{display: isOpen ? "flex" : "none"}}>{item.name}</p></li>
+                            <li className={isOpen ? "sidebar_li" : "sidebar_li sidebar_li_open"} >{item.icon } <p className={isOpen ? "sidebar_li_p" : "sidebar_li_p sidebar_li_p_open"} >{item.name}</p></li>
                         </NavLink>
                     
                     ))}
                     
                     {(userInfo.rol === "user") && itemsUser.map((item, index) => (
                         <NavLink to={item.path} key={index} >
-                            <li className='sidebar_li' style={{paddingLeft: !isOpen ? "10%" : "5%"}}>{item.icon } <p className='sidebar_li_p' style={{display: isOpen ? "flex" : "none"}}>{item.name}</p></li>
+                            <li className={isOpen ? "sidebar_li" : "sidebar_li sidebar_li_open"} >{item.icon } <p className={isOpen ? "sidebar_li_p" : "sidebar_li_p sidebar_li_p_open"} >{item.name}</p></li>
 
                         </NavLink>
                     ))}
 
                     <div className='li_logOut'>
-                      <li className='sidebar_li' style={{paddingLeft: !isOpen ? "10%" : "5%"}} onClick={handleLogOut}><AiOutlineLogout className='sidebar_icon'/> <p className='sidebar_li_p' style={{display: isOpen ? "flex" : "none"}}>Cerrar sesión</p></li>
+                      <li className={isOpen ? "sidebar_li" : "sidebar_li sidebar_li_open"} onClick={handleLogOut}><AiOutlineLogout className='sidebar_icon'/> <p className={isOpen ? "sidebar_li_p" : "sidebar_li_p sidebar_li_p_open"} >Cerrar sesión</p></li>
                     </div>
-                    <p className='sidebar_footer' style={{display: isOpen ? "flex" : "none"}} >Desarrollado por Jorge Castillo</p>
+                    <p className={isOpen ? "sidebar_footer" : "sidebar_footer sidebar_footer_open"} >Desarrollado por Jorge Castillo</p>
                 </nav>
             </>
         )

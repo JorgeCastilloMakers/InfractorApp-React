@@ -5,3 +5,10 @@
     text-align: center;
     color: var(--black-color);
 }
+
+@media (max-width: 867px){
+    .clock{
+        font-size: 35px;
+        font-weight: 900;
+    }
+}

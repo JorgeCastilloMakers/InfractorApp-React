@@ -4,7 +4,7 @@ import { db, uploadFile } from '../../../firebase';
 import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 import './addInfringement.scss';
 import { useFormik } from 'formik';
-import * as Yup from 'Yup';
+import * as Yup from 'yup';
 
 
 

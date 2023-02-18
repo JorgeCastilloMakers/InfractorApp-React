@@ -4,20 +4,7 @@ import { db, uploadFile } from '../../../firebase';
 import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 import './addInfringement.scss';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
-
-
-const validationSchema = Yup.object({
-  uf: Yup.string().trim().required('Campo requerido'),
-  type: Yup.string().trim().required('Campo requerido'),
-  date: Yup.date().max(new Date(), 'La fecha no puede ser superior a la actual').required('Campo requerido'),
-  name: Yup.string().trim().required('Campo requerido'),
-  lastname: Yup.string().trim().required('Campo requerido'),
-  dni: Yup.number().integer('Debe ser un numero entero').required('Campo requerido').moreThan(6, 'Ingresa un DNI valido'),
-  observations: Yup.string().required('Campo requerido'),
-  carID: Yup.string().max(7, 'Ingresa un dominio valido'),
-})
 
 export const AddInfringement = () => {
   const [file, setFile] = useState(()=>{})
@@ -87,7 +74,21 @@ const handleReset = () => {
       imageURL: '',
       aprove: false
     },
-    validationSchema,
+    validate: (values) => {
+      const errors = {};
+      if (!values.uf) {
+        errors.uf = 'Es un campo requerido'
+      } else if (values.uf.length < 8) {
+        errors.uf = 'La uf debe estar compuesta por 8 caracteres'
+      }
+      if (!values.type) {
+        errors.type = 'Es un campo requerido'
+      } else if(values.type === ""){
+        errors.type = 'Debe elegir uno de los items'
+      }
+
+      return errors
+    },
     onSubmit: async (values) => {
       let imageUpload = await uploadFile(file).then()
       if(imageUpload === ""){
@@ -115,7 +116,9 @@ const handleReset = () => {
         initial={{opacity: 0}} 
         animate={{opacity: 1}} 
         exit={{opacity: 0}}
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit}
+        
+      >
         <div className="infringement_box"> 
           <h2 className='infringement_title'>Crear Infracción</h2>
           {error && <span className='infringement_server_error'>{error}</span>}
@@ -128,6 +131,7 @@ const handleReset = () => {
             Tipo
             {touched.type && <small className='infringement_error'>{errors.type}</small>}            
             <select  className='infringement_select' name="type" onChange={handleChange} onBlur={ handleBlur } value={values.type}>
+              <option value=""></option>
               <option value="Control de transito interno">Control de transito interno</option>
               <option value="Ruidos Molestos">Ruidos Molestos</option>
               <option value="Estacionamiento prohibo">Estacionamiento prohibo</option>

@@ -22,7 +22,7 @@ const App = () => {
         <Sidebar />
         <Layout>
           <Navbar />
-          <AnimatePresence>
+          <AnimatePresence mode="wait" initial={false}>
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={
                 <Hero><Login /></Hero>} />

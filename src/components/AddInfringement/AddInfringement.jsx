@@ -7,24 +7,24 @@ import { useFormik } from 'formik';
 
 
 export const AddInfringement = () => {
-  const [file, setFile] = useState(()=>{})
+  const [file, setFile] = useState(() => { })
   const [date, setDate] = useState("" || { day: new Date().getDate(), month: (new Date().getMonth()) + 1, year: new Date().getFullYear() })
   const [data, setData] = useState({
-      uf: '',
-      type: '',
-      date: ``,
-      time: '',
-      name: '',
-      lastname: '',
-      dni: '',
-      observations: '',
-      carID: '',
-      imageURL: '',
-      aprove: "false"
+    uf: '',
+    type: '',
+    date: ``,
+    time: '',
+    name: '',
+    lastname: '',
+    dni: '',
+    observations: '',
+    carID: '',
+    imageURL: '',
+    aprove: "false"
   })
   const [error, setError] = useState();
 
-  let fecha = (`${date.year}-${date.month < 10 ? "0"+ date.month : date.month}-${date.day < 10 ? "0"+ date.day : date.day}`)
+  let fecha = (`${date.year}-${date.month < 10 ? "0" + date.month : date.month}-${date.day < 10 ? "0" + date.day : date.day}`)
 
   let today = new Date();
   let hour = today.getHours();
@@ -32,32 +32,32 @@ export const AddInfringement = () => {
   let timeNow = `${hour}:${minutes}`
 
 
-const handleReset = () => {
-  setData({
-    uf: '',
-    type: '',
-    date: '',
-    time: '',
-    name: '',
-    lastname: '',
-    dni: '',
-    observations: '',
-    carID: '',
-    imageURL: ''
-})
-}
+  const handleReset = () => {
+    setData({
+      uf: '',
+      type: '',
+      date: '',
+      time: '',
+      name: '',
+      lastname: '',
+      dni: '',
+      observations: '',
+      carID: '',
+      imageURL: ''
+    })
+  }
   const upToDatabase = async (data) => {
-    
+
     try {
-    const newInfringement = await addDoc(collection(db, "Infraccion"), {data});
-    const docRef = doc(db, `Infraccion/${newInfringement.id}`);
-    setDoc(docRef, {...data})
-     alert("se cargo una nueva infraccion");
-     setData('')
+      const newInfringement = await addDoc(collection(db, "Infraccion"), { data });
+      const docRef = doc(db, `Infraccion/${newInfringement.id}`);
+      setDoc(docRef, { ...data })
+      alert("se cargo una nueva infraccion");
+      setData('')
     } catch (error) {
       console.log(error)
     }
-     
+
   }
 
   const regexDNI = /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/
@@ -87,16 +87,16 @@ const handleReset = () => {
         errors.type = 'Debe elegir uno de los items'
       }
       if (values.date > fecha) {
-        errors.date = 'La fecha seleccionada no puede ser superior a la actual'        
+        errors.date = 'La fecha seleccionada no puede ser superior a la actual'
       }
       if (!values.time) {
         errors.time = 'Debe indicar la hora, no puede quedar vacío'
       }
       if (!values.name) {
-        errors.name = 'Es un campo requerido'        
+        errors.name = 'Es un campo requerido'
       }
       if (!values.lastname) {
-        errors.lastname = 'Es un campo requerido'        
+        errors.lastname = 'Es un campo requerido'
       }
       if (!values.dni) {
         errors.dni = 'Es campo es requerido'
@@ -111,7 +111,7 @@ const handleReset = () => {
     },
     onSubmit: async (values) => {
       let imageUpload = await uploadFile(file).then()
-      if(imageUpload === ""){
+      if (imageUpload === "") {
         imageUpload = "Sin imagen"
       }
       const infringement = { ...values, imageURL: `${imageUpload}` };
@@ -120,41 +120,41 @@ const handleReset = () => {
       handleReset();
     },
     onChange: async (e) => {
-      const {name, value} = e.target;    
-      setData({...data, [name]: value})
+      const { name, value } = e.target;
+      setData({ ...data, [name]: value })
     },
     onBlur: () => {
       validateOnBlur
     }
-    
+
   });
 
   return (
     <>
-      
+
       <motion.form className="infringement"
-        initial={{opacity: 0}} 
-        animate={{opacity: 1}} 
-        exit={{opacity: 0}}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         onSubmit={handleSubmit}
-        
+
       >
-        <div className="infringement_box"> 
+        <div className="infringement_box">
           <h2 className='infringement_title'>Crear Infracción</h2>
           {error && <span className='infringement_server_error'>{error}</span>}
           <label className='infringement_label' htmlFor="uf">
             Unidad
             {touched.uf && <small className='infringement_error'>{errors.uf}</small>}
-            <input className='infringement_input' type="text" name="uf" onChange={handleChange} onBlur={handleBlur} value={values.uf} />              
+            <input className='infringement_input' type="text" name="uf" onChange={handleChange} onBlur={handleBlur} value={values.uf} />
           </label>
           <label className='infringement_label' htmlFor="type">
             Tipo
-            {touched.type && <small className='infringement_error'>{errors.type}</small>}            
-            <select  className='infringement_select' name="type" onChange={handleChange} onBlur={ handleBlur } value={values.type}>
+            {touched.type && <small className='infringement_error'>{errors.type}</small>}
+            <select className='infringement_select' name="type" onChange={handleChange} onBlur={handleBlur} value={values.type}>
               <option value=""></option>
               <option value="Control de transito interno">Control de transito interno</option>
               <option value="Ruidos Molestos">Ruidos Molestos</option>
-              <option value="Estacionamiento prohibo">Estacionamiento prohibo</option>
+              <option value="Estacionamiento prohibo">Estacionamiento prohibido</option>
               <option value="Exceso de velocidad">Exceso de velocidad</option>
               <option value="Infracciones en obras de construcción">Infracciones en obras de construcción</option>
               <option value="Control de animales">Control de animales</option>
@@ -164,26 +164,26 @@ const handleReset = () => {
               <option value="Uso de Club House/SUM">Uso de Club House/SUM</option>
               <option value="Fallas en medida de seguridad">Fallas en medida de seguridad</option>
               <option value="Medioambiente">Medioambiente</option>
-            </select>             
+            </select>
           </label>
           <label className='infringement_label' htmlFor="date">
             Fecha
             {touched.date && <small className='infringement_error'>{errors.date}</small>}
-            <input className='infringement_input' type="date" name="date" defaultValue={fecha} onChange={handleChange} onBlur={ handleBlur }/>              
+            <input className='infringement_input' type="date" name="date" defaultValue={fecha} onChange={handleChange} onBlur={handleBlur} />
           </label>
           <label className='infringement_label' htmlFor="time">
             Hora
-            <input className='infringement_input' type="time" name="time" defaultValue={timeNow} onChange={handleChange} onBlur={ handleBlur }/>  
+            <input className='infringement_input' type="time" name="time" defaultValue={timeNow} onChange={handleChange} onBlur={handleBlur} />
           </label>
           <label className='infringement_label' htmlFor="name">
             Nombre
             {touched.name && <small className='infringement_error'>{errors.name}</small>}
-            <input className='infringement_input' type="text" name="name" onChange={handleChange} onBlur={ handleBlur } value={values.name}/> 
+            <input className='infringement_input' type="text" name="name" onChange={handleChange} onBlur={handleBlur} value={values.name} />
           </label>
           <label className='infringement_label' htmlFor="lastname">
             Apellido
             {touched.lastname && <small className='infringement_error'>{errors.lastname}</small>}
-            <input className='infringement_input' type="text" name="lastname" onChange={handleChange} onBlur={ handleBlur } value={values.lastname}/> 
+            <input className='infringement_input' type="text" name="lastname" onChange={handleChange} onBlur={handleBlur} value={values.lastname} />
           </label>
 
         </div>
@@ -191,33 +191,33 @@ const handleReset = () => {
           <label className='infringement_label' htmlFor="dni">
             DNI
             {touched.dni && <small className='infringement_error'>{errors.dni}</small>}
-            <input className='infringement_input' type="number" name="dni" onChange={handleChange} onBlur={ handleBlur } value={values.dni}/> 
+            <input className='infringement_input' type="number" name="dni" onChange={handleChange} onBlur={handleBlur} value={values.dni} />
           </label>
           <label className='infringement_label' htmlFor="observations">
             Observaciones
             {touched.observations && <small className='infringement_error'>{errors.observations}</small>}
-          <textarea className='infringement_textarea' name="observations"  cols="30" rows="10" onChange={handleChange} onBlur={ handleBlur } value={values.observations}></textarea> 
+            <textarea className='infringement_textarea' name="observations" cols="30" rows="10" onChange={handleChange} onBlur={handleBlur} value={values.observations}></textarea>
           </label>
           <label className='infringement_label' htmlFor="carID">
             Dominio
             {touched.carID && <small className='infringement_error'>{errors.carID}</small>}
-            <input className='infringement_input' type="text" name="carID" onChange={handleChange} onBlur={ handleBlur } value={values.carID}/>
+            <input className='infringement_input' type="text" name="carID" onChange={handleChange} onBlur={handleBlur} value={values.carID} />
           </label>
           <label className='infringement_label' htmlFor="imageURL">
             Imagen
-          <input className='infringement_input' type="file" name="imageURL"  onChange={e => setFile(e.target.files[0])}/>  
+            <input className='infringement_input' type="file" name="imageURL" onChange={e => setFile(e.target.files[0])} />
           </label>
-        <div className="infringement_btn_container">
-          <button type="submit" className='infringement_btn_add'>Agregar</button>             
-          <button type="reset" className='infringement_btn_close' onClick={handleReset}>Cancelar</button>
-        </div>
+          <div className="infringement_btn_container">
+            <button type="submit" className='infringement_btn_add'>Agregar</button>
+            <button type="reset" className='infringement_btn_close' onClick={handleReset}>Cancelar</button>
+          </div>
 
         </div>
 
 
-        
-        
-      </motion.form>  
+
+
+      </motion.form>
     </>
   )
 }

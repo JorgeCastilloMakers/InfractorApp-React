@@ -1,4 +1,6 @@
 import './dashboard.scss'
+import { db } from '../../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import { Box, Avatar } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { useAuth } from '../../context/AuthContext'
@@ -13,10 +15,7 @@ import { motion } from 'framer-motion'
 export const Dashboard = () => {
 
   const { getUsers, usersList, getInfringement, infringementList } = useAuth();
-
-  const [modalOpen, setModalOpen] = useState(false)
   const [modalAprove, setModalAprove] = useState(false)
-  const [imagePreview, setImagePreview] = useState()
   const [dataPreview, setDataPreview] = useState({
     uf: "",
     fullname: "",
@@ -29,38 +28,66 @@ export const Dashboard = () => {
     observations: "",
     imagen: ""
   })
-
+  const [dataSelected, setDataSelected] = useState([])
+  //Se monta el componente y se obtienen los listados de users e infracciones que provienen de Firebase mediante
+  //estas dos funciones que se encuentran en el context, getUsers y getInfringement que devuelven un array.
   useEffect(() => {
     getUsers()
   }, [])
-
   useEffect(() => {
     getInfringement()
   }, [])
 
-  const viewImage = (image) => {
-    setImagePreview(image)
-    setModalOpen(!modalOpen)
-  }
-
+  //Prepara la informacion que se va a renderizar en el modal para aprobacion de la infraccion.
+  //Tambien cambia el dataSelected para tener en un estado la info completa de la fila seleccionada para realizar cambios en la db.
   const viewData = (data) => {
-
-    let { carID, date, dni, id, imageURL, lastname, name, observations, time, type, uf } = data;
-    let dataToSend = { ...dataPreview, dni: dni, dominio: carID, fecha: date, fullname: name + " " + lastname, hora: time, tipo: type, uf: uf, imagen: imageURL, observations: observations };
+    setDataSelected(data)
+    let { carID, date, dni, id, imageURL, lastname, name, observations, time, type, uf, aprove } = data;
+    let dataToSend = { ...dataPreview, id: id, dni: dni, dominio: carID, fecha: date, fullname: name + " " + lastname, hora: time, tipo: type, uf: uf, imagen: imageURL, observations: observations, aprove: aprove };
     setDataPreview(dataToSend)
     setModalAprove(!modalAprove)
   }
 
-  const columnsUsers = useMemo(() => [
+  //Funcion que sirve que cambia la calve "aprove" a "true", esto modifica la db en Firestore y vuelve a recargar el grid.
+  const aproveInfringement = async (data) => {
+    let dataEdit = { ...data, aprove: true }
+    try {
+      const docRef = doc(db, `Infraccion/${data.id}`);
+      const payload = { ...dataEdit }
+      setDoc(docRef, payload)
+      setModalAprove(!modalAprove)
+      getInfringement()
+    } catch (error) {
+      console.log(error)
+    }
+    return
+  }
+  //Funcion que sirve que cambia la calve "aprove" a "false", esto modifica la db en Firestore y vuelve a recargar el grid.
+  const rejectInfringement = async (data) => {
+    let dataEdit = { ...data, aprove: false }
+    try {
+      const docRef = doc(db, `Infraccion/${data.id}`);
+      const payload = { ...dataEdit }
+      setDoc(docRef, payload)
+      setModalAprove(!modalAprove)
+      getInfringement()
+    } catch (error) {
+      console.log(error)
+    }
+    return
+  }
+
+  //DataGrid precisa de un array de columnas para renderizarlas, aqui se arma el array de columnas de la grid Usuarios.
+  const columnsUsers = [
     { field: 'avatar', headerName: 'Avatar', width: 70, renderCell: params => <Avatar src={params.row.avatar} />, sortable: false, filtrable: false },
     { field: 'nombreUsuario', headerName: 'Nombre', width: 100 },
     { field: 'apellidoUsuario', headerName: 'Apellido', width: 100 },
     { field: 'correo', headerName: 'Email', width: 200 },
     { field: 'rol', headerName: 'Rol', width: 100, type: 'singleSelect', valueOptions: ['admin', 'user'], editable: true },
-  ], [])
-
-  const columnsInfractor = useMemo(() => [
-    { field: 'aprove', headerName: 'Estado', width: 100, renderCell: params => params.row.aprove ? <BsCheckCircleFill style={{ fontSize: "20px" }} /> : <AiFillCloseCircle style={{ fontSize: "20px", textAlign: "center" }} /> },
+  ];
+  //DataGrid precisa de un array de columnas para renderizarlas, aqui se arma el array de columnas de la grid Infracciones.
+  const columnsInfractor = [
+    { field: 'aprove', headerName: 'Estado', width: 100, renderCell: params => params.row.aprove ? <BsCheckCircleFill style={{ fontSize: "20px", fill: "green" }} /> : <AiFillCloseCircle style={{ fontSize: "22px", fill: "red" }} /> },
     { field: 'uf', headerName: 'UF', width: 100 },
     { field: 'date', headerName: 'Fecha', width: 100 },
     { field: 'time', headerName: 'Hora', width: 60 },
@@ -71,7 +98,8 @@ export const Dashboard = () => {
     { field: 'name', headerName: 'Nombre', width: 100 },
     { field: 'dni', headerName: 'DNI', width: 100 },
     { field: 'carID', headerName: 'Dominio', width: 100 },
-  ], [])
+  ];
+
 
   return (
     <motion.div
@@ -106,15 +134,8 @@ export const Dashboard = () => {
             isRowSelectable={(data) => viewData(data.row)}
           >
           </DataGrid>
-          <div style={{ display: modalOpen ? "flex" : "none" }} className='modal'>
-            <div className='modal_header'>
-              <h4 className='modal_title'>Imagen</h4>
-              <AiOutlineCloseCircle className='modal_btn-close' onClick={() => setModalOpen(!modalOpen)} />
-            </div>
-            <div className='modal_image-container'>
-              <img className='modal_image' src={`${imagePreview}`} />
-            </div>
-          </div>
+
+
           <div style={{ display: modalAprove ? "flex" : "none" }} className='modal_aprove'>
             <div className='modal_aprove_header'>
               <h4 className='modal_aprove_title'>Infracción: {dataPreview.tipo}</h4>
@@ -134,8 +155,8 @@ export const Dashboard = () => {
                 <h3 className='modal_aprove_text'>Hora: {dataPreview.hora}</h3>
                 <h3 className='modal_aprove_text'>Observaciones: {dataPreview.observations}</h3>
                 <div className='modal_aprove_btn-container'>
-                  <button className='modal_aprove_btn-aprove'>Aprobar</button>
-                  <button className='modal_aprove_btn-decline' onClick={() => setModalAprove(!modalAprove)}>Rechazar</button>
+                  <button className='modal_aprove_btn-aprove' onClick={() => aproveInfringement(dataSelected)}>Aprobar</button>
+                  <button className='modal_aprove_btn-decline' onClick={() => rejectInfringement(dataSelected)}>Rechazar</button>
                 </div>
               </div>
 

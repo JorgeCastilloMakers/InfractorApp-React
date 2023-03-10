@@ -40,6 +40,7 @@
     &-root{
         border: none; 
         box-shadow: 0px 8px 23px 0px rgba(0, 0, 0, 0.23);
+        cursor: pointer;
     }
     &-row{
         box-shadow: 0px 8px 90px 0px rgba(31, 115, 241, 0.23);
@@ -47,6 +48,7 @@
     }
     &-cell{
         background-color: #fdf9f9;
+        text-transform: uppercase;
         &:focus{
             outline: var(--blue-color);
         }

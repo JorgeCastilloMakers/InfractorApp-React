@@ -4,6 +4,8 @@ import { db, uploadFile } from '../../../firebase';
 import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 import './addInfringement.scss';
 import { useFormik } from 'formik';
+import { useAuth } from '../../context/AuthContext'
+import { Loader } from '../loader/Loader'
 
 
 export const AddInfringement = () => {
@@ -23,6 +25,8 @@ export const AddInfringement = () => {
     aprove: "false"
   })
   const [error, setError] = useState();
+  const { loading } = useAuth()
+  const [isLoading, setIsLoading] = useState(false);
 
   let fecha = (`${date.year}-${date.month < 10 ? "0" + date.month : date.month}-${date.day < 10 ? "0" + date.day : date.day}`)
 
@@ -47,22 +51,23 @@ export const AddInfringement = () => {
     })
   }
   const upToDatabase = async (data) => {
-
+    setIsLoading(true);
     try {
       const newInfringement = await addDoc(collection(db, "Infraccion"), { data });
       const docRef = doc(db, `Infraccion/${newInfringement.id}`);
       setDoc(docRef, { ...data })
       alert("se cargo una nueva infraccion");
-      setData('')
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false);
     }
 
   }
 
   const regexDNI = /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/
 
-  const { handleSubmit, errors, touched, handleChange, validateOnBlur, handleBlur, validate, values } = useFormik({
+  const { handleSubmit, errors, touched, handleChange, validateOnBlur, handleBlur, resetForm, values } = useFormik({
     initialValues: {
       uf: '',
       type: '',
@@ -117,7 +122,7 @@ export const AddInfringement = () => {
       const infringement = { ...values, imageURL: `${imageUpload}` };
       setData(infringement)
       upToDatabase(infringement)
-      handleReset();
+      resetForm();
     },
     onChange: async (e) => {
       const { name, value } = e.target;
@@ -139,6 +144,7 @@ export const AddInfringement = () => {
         onSubmit={handleSubmit}
 
       >
+        {isLoading && <Loader />}
         <div className="infringement_box">
           <h2 className='infringement_title'>Crear Infracción</h2>
           {error && <span className='infringement_server_error'>{error}</span>}

@@ -3,8 +3,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { auth, db } from '../../firebase'
 import { collection, doc, getDocs, getDoc, setDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
-import avatarAdmin from '../../public/avatar-admin.jpg'
-import avatarUser from '../../public/avatar-user.jpg'
+import avatarAdmin from '../../src/assets/avatar-admin.jpg'
+import avatarUser from '../../src/assets/avatar-user.jpg'
 
 // Se crea un contexto para el manejo de autenticación en la aplicación
 export const authContext = createContext()
@@ -127,6 +127,7 @@ export function AuthProvider({ children }) {
       setUsersList(docs)
     })
   }
+
 
 
 

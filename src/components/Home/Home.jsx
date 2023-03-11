@@ -24,9 +24,11 @@ export const Home = () => {
         exit={{ opacity: 0 }} className="home">
         <div className="home_title">
           <h2>Hola, {userInfo.name}</h2>
+
         </div>
         <Clock className='home_clock' />
         <h3 className="home_help">Toca el signo + para agregar una infracción</h3>
+        <img src="../../src/assets/men-thinking.png" alt="men-thinking" className="home_img" />
         <motion.button whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }} className="add_infringement" onClick={handlePlus}><FiPlusCircle className="add_infringement_icon" /></motion.button>
       </motion.div>
     </>

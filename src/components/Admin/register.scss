@@ -30,6 +30,7 @@
             width: 40%;
             padding-right: 5%;
             padding-left: 5%;
+            z-index: 1;
     }
     &_input{
         width: 100%;
@@ -41,7 +42,7 @@
             padding-left: 6px;
             color: var(--black-color);
             background-color: var(--blueLight-color);
-        
+            z-index: 1;
             &:focus {
                 outline: none;
             }
@@ -96,6 +97,14 @@ background-color: var(--black-color);
         cursor: pointer;
     }
     }
+                &_img {
+                    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.233));
+                    position: fixed;
+                    bottom: 0;
+                    right: 0;
+                    z-index: 0;
+                    width: 30%;
+                }
 }
 .register_btn_container{
     width: 30%;
@@ -104,4 +113,23 @@ background-color: var(--black-color);
     justify-content: space-between;
     justify-content: center;
     padding-top: 10px;
+    z-index: 1;
+}
+
+@media (max-width: 867px){
+    .register {
+    
+            &_title {
+                width: 100%;
+                justify-content: flex-start;
+            }
+    
+            &_label {
+                width: 100%;
+            }
+        }
+    
+        .register_btn_container {
+            width: 100%;
+        }
 }

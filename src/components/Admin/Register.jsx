@@ -80,8 +80,6 @@ export const Register = () => {
           <button type='reset' className='register_btn_close'>Cancelar</button>
         </div>
 
-
-        <img src="../../src/assets/men-works.png" alt="men-works" className="register_img" />
       </motion.form>
 
     </>

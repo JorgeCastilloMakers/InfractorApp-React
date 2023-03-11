@@ -25,9 +25,6 @@
     height: 100vh;
     padding-left: 10%;
     padding-right: 10%;
-    // background-image: url('../../assets/men-thinking.png');
-    // background-repeat: no-repeat;
-    // background-position: bottom;
     &_title{
         color: var(--black-color);
         font-size: 30px;
@@ -38,11 +35,6 @@
     &_help{
         color: var(--blue-color);
         font-size: 12px;
-    }
-    &_img{
-        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.233));
-        position: fixed;
-        bottom: 0;
     }
 }
 

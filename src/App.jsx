@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import { Home } from './components/Home/Home';
 import { Register } from './components/Admin/Register';
 import { Login } from './components/Login/Login';
@@ -24,8 +24,10 @@ const App = () => {
           <Navbar />
           <AnimatePresence mode="wait" initial={false}>
             <Routes location={location} key={location.pathname}>
+
               <Route path="/" element={
                 <Hero><Login /></Hero>} />
+              <Route path="*" element={<Navigate to="/" />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/home" element={<Home />} />
                 <Route path="/dashboard" element={<Dashboard />} />

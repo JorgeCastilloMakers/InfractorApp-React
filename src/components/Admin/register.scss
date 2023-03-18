@@ -13,6 +13,11 @@
         padding-left: 6px;
         padding-right: 6px;
         border-radius: 5px;
+        width: 40%;
+    }
+    &_error{
+     color:rgb(179, 4, 4);
+     width: 100%;
     }
     &_title{
         padding-bottom: 2%;
@@ -27,7 +32,7 @@
             font-size: 18px;
             font-weight: 400;
             color: var(--black-color);
-            width: 40%;
+            width: 60%;
             padding-right: 5%;
             padding-left: 5%;
 
@@ -81,7 +86,7 @@
             }
     }
     &_btn_close{
-background-color: var(--black-color);
+    background-color: var(--black-color);
     padding: 1% 6%;
     border-radius: 5px;
     font-size: 16px;

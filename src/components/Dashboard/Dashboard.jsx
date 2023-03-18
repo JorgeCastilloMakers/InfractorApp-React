@@ -4,11 +4,13 @@ import { doc, setDoc } from 'firebase/firestore';
 import { Box, Avatar } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { useAuth } from '../../context/AuthContext'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { BsCardImage, BsCheckCircleFill } from "react-icons/bs";
 import { useState } from 'react'
 import { AiOutlineCloseCircle, AiFillCloseCircle, AiFillFileExcel } from "react-icons/ai";
 import { motion } from 'framer-motion'
+import avatarAdmin from '../../../src/assets/avatar-admin.jpg'
+import avatarUser from '../../../src/assets/avatar-user.jpg'
 
 
 
@@ -79,7 +81,7 @@ export const Dashboard = () => {
 
   //DataGrid precisa de un array de columnas para renderizarlas, aqui se arma el array de columnas de la grid Usuarios.
   const columnsUsers = [
-    { field: 'avatar', headerName: 'Avatar', width: 70, renderCell: params => <Avatar src={params.row.avatar} />, sortable: false, filtrable: false },
+    { field: 'avatar', headerName: 'Avatar', width: 70, renderCell: params => <Avatar src={params.row.rol === 'admin' ? avatarAdmin : avatarUser} />, sortable: false, filtrable: false },
     { field: 'nombreUsuario', headerName: 'Nombre', width: 100 },
     { field: 'apellidoUsuario', headerName: 'Apellido', width: 100 },
     { field: 'correo', headerName: 'Email', width: 200 },

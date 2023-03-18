@@ -26,7 +26,13 @@ const App = () => {
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={
                 <Hero><Login /></Hero>} />
-              <Route path="/home" element={
+              <Route element={<ProtectedRoute />}>
+                <Route path="/home" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/add" element={<AddInfringement />} /> {/* <MyRecipes /> */}
+                <Route path="/register" element={<Register />} />
+              </Route>
+              {/* <Route path="/home" element={
                 <ProtectedRoute>
                   <Home />
                 </ProtectedRoute>
@@ -45,7 +51,7 @@ const App = () => {
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
-              } />
+              } /> */}
             </Routes>
           </AnimatePresence>
         </Layout>

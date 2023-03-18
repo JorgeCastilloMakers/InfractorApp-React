@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { Loader } from '../components/loader/Loader'
 
@@ -12,7 +12,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
         return <Navigate to={`/`} replace />;
     }
 
-    return (children)
+    return <Outlet />;
 
 }
 

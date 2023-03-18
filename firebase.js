@@ -29,5 +29,5 @@ export const uploadFile = async (file) => {
   return fileUrl
 }
 
-
+auth.signOut();
 

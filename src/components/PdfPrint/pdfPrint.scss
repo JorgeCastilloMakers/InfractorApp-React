@@ -1,0 +1,57 @@
+
+.pdf_print{
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    color: var(--black-color);
+    position: absolute;
+    padding-top: 5%;
+    padding-bottom: 5%;
+
+    &_header{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+
+
+    }
+        &_title{
+            font-size: 20px;
+            font-weight: 900;
+        }
+        &_logo{
+            width: 40px;
+            height: 40px;
+        }
+    &_data-container{
+        display: flex;
+        height: 100%;
+        gap: 20px;
+        padding-top: 10%;
+    }
+    &_info{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    &_text{
+        font-size: 16px;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+    &_image{
+        max-width: 300px;
+        border-radius: 2px;
+    }
+    &_footer{
+        align-self: flex-end;
+        justify-self: flex-end;
+    }
+}
